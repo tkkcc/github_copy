@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         github_copy
-// @version      0.0.1
+// @version      0.0.2
 // @include      http*://github.com/*
 // @description  copy button
 // @namespace    https://greasyfork.org/users/164996a
 // ==/UserScript==
 const init = () => {
-  // console.log('copy')
-  const a = document.querySelector('div.file-actions')
-  const b = document.querySelectorAll('table.js-file-line-container td.js-file-line')
+  const a = document.querySelector('.repository-content  .BtnGroup + div')
+  const b = document.querySelectorAll(
+    'table.js-file-line-container td.js-file-line'
+  )
   if (!a || !b || b.length === 0) return
   a.insertAdjacentHTML(
     'beforeend',
@@ -21,7 +22,12 @@ const init = () => {
   const c = a.lastElementChild
   let d
   c.addEventListener('click', () => {
-    d = d || [...b].reduce((a, c) => a + c.innerText + (c.innerText[0] === '\n' ? '' : '\n'), '')
+    d =
+      d ||
+      [...b].reduce(
+        (a, c) => a + c.innerText + (c.innerText[0] === '\n' ? '' : '\n'),
+        ''
+      )
     navigator.clipboard.writeText(d)
   })
 }
